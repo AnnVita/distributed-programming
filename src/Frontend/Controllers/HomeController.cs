@@ -12,8 +12,8 @@ namespace Frontend.Controllers
 {
     public class HomeController : Controller
     {
-        private static string m_URL = "http://localhost:5003/api/values";
-        private HttpClient m_httpClient = new HttpClient();
+        private static string URL = "http://localhost:5003/api/values";
+        private HttpClient httpClient = new HttpClient();
         
         public IActionResult Index()
         {
@@ -33,16 +33,13 @@ namespace Frontend.Controllers
             {
                 return Ok("");
             }
-            else
-            {
-                List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>(){
-                    new KeyValuePair<string, string>("value", data),
-                };
-                var content = new FormUrlEncodedContent(values);
-                var request = m_httpClient.PostAsync(m_URL, content);
-                var requestContent = request.Result.Content.ReadAsStringAsync();
-                return Ok(requestContent.Result);
-            }
+            List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>(){
+                new KeyValuePair<string, string>("value", data),
+            };
+            var content = new FormUrlEncodedContent(values);
+            var request = httpClient.PostAsync(URL, content);
+            var requestContent = request.Result.Content.ReadAsStringAsync();
+            return Ok(requestContent.Result);
         }
 
         public IActionResult Error()
